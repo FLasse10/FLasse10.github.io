@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Leaflet Karte mit Polygon</title>
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+e2c5gq8bWm3X2v9Fh4b+3s3G6f3r2o3qfXQm6vkg="
+    crossorigin=""
+  />
+  <style>
+    /* Vollbild-Karte */
+    html, body, #map { height: 100%; margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j8kT+QnQwq7g3p2k3sE9s6hQw3Z4ZDh8v+7r4+M="
+    crossorigin="">
+  </script>
+
+  <script>
+    // 1) Karte initialisieren (Mittelpunkt + Zoom)
+    const map = L.map('map').setView([52.52, 13.405], 13); // Berlin-Beispiel (lat, lng)
+
+    // 2) Tile-Layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap-Mitwirkende'
+    }).addTo(map);
+
+    // 3) Polygon-Koordinaten (Array von [lat, lng])
+    // Beispiel: ein kleines Dreieck in Berlin
+    const polygonCoords = [
+      [52.5215, 13.4095],
+      [52.5195, 13.4065],
+      [52.5205, 13.4035]
+    ];
+
+    // 4) Polygon erstellen mit Stiloptionen
+    const polygon = L.polygon(polygonCoords, {
+      color: 'blue',       // Randfarbe
+      weight: 3,           // Randstärke
+      fillColor: 'cyan',   // Füllfarbe
+      fillOpacity: 0.4     // Füll-Transparenz
+    }).addTo(map);
+
+    // Optional: Popup am Polygon
+    polygon.bindPopup('<b>Mein Polygon</b><br>Beispiel-Dreieck.');
+
+    // Karte so skalieren, dass das Polygon passt
+    map.fitBounds(polygon.getBounds());
+
+    // 5) GeoJSON-Beispiel (falls du GeoJSON nutzen willst)
+    /*
+    const geojson = {
+      "type": "Feature",
+      "properties": { "name": "Mein Polygon" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [13.4095, 52.5215],
+            [13.4065, 52.5195],
+            [13.4035, 52.5205],
+            [13.4095, 52.5215] // Polygone müssen geschlossen sein (erstes = letztes)
+          ]
+        ]
+      }
+    };
+    L.geoJSON(geojson, { style: { color: 'red' } }).addTo(map);
+    */
+
+    // 6) Interaktion: Klick auf Karte zeigt Koordinaten
+    map.on('click', function(e){
+      const lat = e.latlng.lat.toFixed(6);
+      const lng = e.latlng.lng.toFixed(6);
+      L.popup()
+       .setLatLng(e.latlng)
+       .setContent(`Geklickt: ${lat}, ${lng}`)
+       .openOn(map);
+    });
+  </script>
+</body>
+</html>
