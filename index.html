@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Karte mit Polygon – GitHub Pages</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-sA+e2c5gq8bWm3X2v9Fh4b+3s3G6f3r2o3qfXQm6vkg="
+        crossorigin=""
+    />
+
+    <style>
+        /* Karte soll den ganzen Bildschirm ausfüllen */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j8kT+QnQwq7g3p2k3sE9s6hQw3Z4ZDh8v+7r4+M="
+    crossorigin="">
+</script>
+
+<script>
+    // Karte initialisieren
+    const map = L.map('map').setView([52.52, 13.405], 13); // Berlin als Beispiel
+
+    // OpenStreetMap Layer einbinden
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap-Mitwirkende'
+    }).addTo(map);
+
+    // Beispiel-Polygon
+    const polygonCoordinates = [
+        [52.5215, 13.4095],
+        [52.5195, 13.4065],
+        [52.5205, 13.4035]
+    ];
+
+    const polygon = L.polygon(polygonCoordinates, {
+        color: 'red',
+        fillColor: 'orange',
+        fillOpacity: 0.5
+    }).addTo(map);
+
+    polygon.bindPopup("Mein Polygon auf GitHub Pages");
+
+    // Karte automatisch an das Polygon anpassen
+    map.fitBounds(polygon.getBounds());
+</script>
+
+</body>
+</html>
