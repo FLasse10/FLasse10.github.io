@@ -1,0 +1,54 @@
+<!doctype html>
+            <html lang="de">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <title>Karte mit Polygon – GitHub Pages</title>
+
+                <!-- Leaflet CSS (ohne integrity) -->
+                <link
+                    rel="stylesheet"
+                    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+                />
+
+                <style>
+                    html, body {
+                        height: 100%;
+                        margin: 0;
+                    }
+                    #map {
+                        height: 100%;
+                        width: 100%;
+                    }
+                </style>
+            </head>
+            <body>
+
+            <div id="map"></div>
+
+            <!-- Leaflet JS (ohne integrity) -->
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+            <script>
+                const map = L.map('map').setView([8.89,51.97], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; OpenStreetMap Mitwirkende'
+                }).addTo(map);
+
+                const polygonCoordinates = [[51.984276817073955, 8.845077753067017], [51.98367551680896, 8.84522795677185], [51.9837482018853, 8.845860958099365], [51.98376141734105, 8.847899436950684], [51.983734986425645, 8.848961591720581], [51.98356979285101, 8.850356340408325], [51.98407197942872, 8.850517272949219], [51.9841777022013, 8.847835063934326], [51.984243778807446, 8.846043348312378], [51.984276817073955, 8.845077753067017]];
+
+                const polygon = L.polygon(polygonCoordinates, {
+                    color: 'red',
+                    fillColor: 'orange',
+                    fillOpacity: 0.5
+                }).addTo(map);
+
+                polygon.bindPopup("Mein Polygon auf GitHub Pages");
+
+                map.fitBounds(polygon.getBounds());
+            </script>
+
+            </body>
+            </html>
