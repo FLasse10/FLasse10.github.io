@@ -1,0 +1,54 @@
+<!doctype html>
+            <html lang="de">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <title>Karte mit Polygon – GitHub Pages</title>
+
+                <!-- Leaflet CSS (ohne integrity) -->
+                <link
+                    rel="stylesheet"
+                    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+                />
+
+                <style>
+                    html, body {
+                        height: 100%;
+                        margin: 0;
+                    }
+                    #map {
+                        height: 100%;
+                        width: 100%;
+                    }
+                </style>
+            </head>
+            <body>
+
+            <div id="map"></div>
+
+            <!-- Leaflet JS (ohne integrity) -->
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+            <script>
+                const map = L.map('map').setView([8.89,51.97], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; OpenStreetMap Mitwirkende'
+                }).addTo(map);
+
+                const polygonCoordinates = [[51.94586202341555, 8.822692036628725], [51.946414231949504, 8.823373317718508], [51.94697304683788, 8.824027776718141], [51.947349994960355, 8.824510574340822], [51.9494198466079, 8.827026486396791], [51.9490627544205, 8.828340768814089], [51.944827027431295, 8.8260555267334], [51.94484356110118, 8.825953602790834], [51.94478734659871, 8.82106125354767], [51.94538916878849, 8.820894956588747], [51.94560079665046, 8.820846676826479], [51.94580581018952, 8.820884227752687], [51.94597775630618, 8.820970058441164], [51.94615631503729, 8.821168541908266], [51.945759516891634, 8.822241425514223], [51.94576613022283, 8.822434544563295], [51.94580911685182, 8.82255256175995], [51.94586202341555, 8.822692036628725]];
+
+                const polygon = L.polygon(polygonCoordinates, {
+                    color: 'red',
+                    fillColor: 'orange',
+                    fillOpacity: 0.5
+                }).addTo(map);
+
+                polygon.bindPopup("Mein Polygon auf GitHub Pages");
+
+                map.fitBounds(polygon.getBounds());
+            </script>
+
+            </body>
+            </html>
